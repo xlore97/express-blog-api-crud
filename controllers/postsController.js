@@ -1,5 +1,3 @@
-// controllers/postsController.js
-// Import "robusto": supporta sia export array diretto che oggetto { post } o { posts }
 const rawData = require("../data/posts");
 
 const posts =
@@ -17,7 +15,6 @@ function ensurePosts(res) {
     return true;
 }
 
-// GET /posts
 function getAllPosts(req, res) {
     if (!ensurePosts(res)) return;
 
@@ -33,7 +30,6 @@ function getAllPosts(req, res) {
     res.json({ data: result, count: result.length });
 }
 
-// GET /posts/:id
 function getPostById(req, res) {
     if (!ensurePosts(res)) return;
 
@@ -50,9 +46,10 @@ function getPostById(req, res) {
     res.json({ data: found });
 }
 
-// POST /posts
 function createPost(req, res) {
     if (!ensurePosts(res)) return;
+
+    console.log('📩 Dati ricevuti dal body:', req.body);
 
     const { title, content, image, tags = [] } = req.body || {};
     if (!title || !content) {
@@ -72,7 +69,6 @@ function createPost(req, res) {
     res.status(201).json({ data: newPost });
 }
 
-// PUT /posts/:id (update totale/parziale)
 function updatePost(req, res) {
     if (!ensurePosts(res)) return;
 
@@ -95,7 +91,6 @@ function updatePost(req, res) {
     res.json({ data: posts[idx] });
 }
 
-// DELETE /posts/:id
 function deletePost(req, res) {
     if (!ensurePosts(res)) return;
 
